@@ -14,23 +14,17 @@ class CarInsurance {
     for (var i = 0; i < this.products.length; i++) {
       if (this.products[i].name != 'Full Coverage' && this.products[i].name != 'Special Full Coverage') {
         if (this.products[i].price > 0) {
-          if (this.products[i].name != 'Mega Coverage') {
-            this.products[i].price = this.products[i].price - 1;
-          }
+          decreasesByType(this, i, 'Mega Coverage');
         }
       } else {
         if (this.products[i].price < 50) {
           this.products[i].price = this.products[i].price + 1;
           if (this.products[i].name == 'Special Full Coverage') {
             if (this.products[i].sellIn < 11) {
-              if (this.products[i].price < 50) {
-                this.products[i].price = this.products[i].price + 1;
-              }
+              increasesPrice(this, i);
             }
             if (this.products[i].sellIn < 6) {
-              if (this.products[i].price < 50) {
-                this.products[i].price = this.products[i].price + 1;
-              }
+              increasesPrice(this, i)
             }
           }
         }
@@ -42,22 +36,30 @@ class CarInsurance {
         if (this.products[i].name != 'Full Coverage') {
           if (this.products[i].name != 'Special Full Coverage') {
             if (this.products[i].price > 0) {
-              if (this.products[i].name != 'Mega Coverage') {
-                this.products[i].price = this.products[i].price - 1;
-              }
+              decreasesByType(this, i, 'Super Sale');
             }
           } else {
             this.products[i].price = this.products[i].price - this.products[i].price;
           }
         } else {
-          if (this.products[i].price < 50) {
-            this.products[i].price = this.products[i].price + 1;
-          }
+          increasesPrice(this, i);
         }
       }
     }
 
     return this.products;
+  }
+}
+
+function decreasesByType(vm, i, type) {
+  if (vm.products[i].name != type) {
+    vm.products[i].price = vm.products[i].price - 1;
+  }
+}
+
+function increasesPrice(vm, i) {
+  if (vm.products[i].price < 50) {
+    vm.products[i].price = vm.products[i].price + 1;
   }
 }
 
